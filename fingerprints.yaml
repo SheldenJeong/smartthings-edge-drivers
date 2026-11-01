@@ -1,0 +1,6 @@
+zigbeeManufacturer:
+  - id: tuya-ts0601-co2-tze204-3ejwxpmu
+    deviceLabel: Tuya CO2 Sensor
+    manufacturer: _TZE204_3ejwxpmu
+    model: TS0601
+    deviceProfileName: tuya-co2
