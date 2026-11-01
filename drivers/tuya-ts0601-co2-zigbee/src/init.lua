@@ -4,6 +4,22 @@ local capabilities = require "st.capabilities"
 local TUYA_CLUSTER = 0xEF00
 local TUYA_COMMAND_RESPONSE = 0x01
 local TUYA_COMMAND_REPORT = 0x02
+local HEARTBEAT_SECONDS = 60
+
+local function emit_if_due(device, field, value, threshold, event)
+  local last_value = device:get_field(field .. "_value")
+  local last_at = device:get_field(field .. "_at")
+  local now = os.time()
+
+  if last_value == nil
+      or math.abs(value - last_value) >= threshold
+      or last_at == nil
+      or now - last_at >= HEARTBEAT_SECONDS then
+    device:emit_event(event)
+    device:set_field(field .. "_value", value, { persist = true })
+    device:set_field(field .. "_at", now, { persist = true })
+  end
+end
 
 local function decode_unsigned(bytes, first, length)
   if length < 1 or length > 4 or first + length - 1 > #bytes then
@@ -28,23 +44,26 @@ local function emit_data_point(device, data_point, data_type, bytes, first, leng
   end
 
   if data_point == 0x02 then
-    device:emit_event(capabilities.carbonDioxideMeasurement.carbonDioxide({
-      value = value,
-      unit = "ppm"
-    }))
+    emit_if_due(device, "co2", value, 10,
+      capabilities.carbonDioxideMeasurement.carbonDioxide({
+        value = value,
+        unit = "ppm"
+      }))
   elseif data_point == 0x12 then
     if length == 4 and value >= 0x80000000 then
       value = value - 0x100000000
     end
-    device:emit_event(capabilities.temperatureMeasurement.temperature({
-      value = value / 10,
-      unit = "C"
-    }))
+    emit_if_due(device, "temperature", value, 5,
+      capabilities.temperatureMeasurement.temperature({
+        value = value / 10,
+        unit = "C"
+      }))
   elseif data_point == 0x13 then
-    device:emit_event(capabilities.relativeHumidityMeasurement.humidity({
-      value = value / 10,
-      unit = "%"
-    }))
+    emit_if_due(device, "humidity", value, 10,
+      capabilities.relativeHumidityMeasurement.humidity({
+        value = value / 10,
+        unit = "%"
+      }))
   end
 end
 

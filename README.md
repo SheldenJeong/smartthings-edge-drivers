@@ -6,7 +6,7 @@ A collection of independently packaged SmartThings Edge drivers.
 
 | Driver | Protocol | Device |
 |---|---|---|
-| [`tuya-ts0601-co2-zigbee`](drivers/tuya-ts0601-co2-zigbee/) | Zigbee | Tuya TS0601 CO2 sensor (`_TZE204_3ejwxpmu`) |
+| [`tuya-ts0601-co2-zigbee`](drivers/tuya-ts0601-co2-zigbee/) | Zigbee | Tuya TS0601 Air Quality (`_TZE204_3ejwxpmu`) |
 
 Each folder under `drivers/` is a standalone SmartThings Edge driver project with its own `config.yaml`, source, profile, and fingerprints. Keep driver-specific code and documentation inside that folder; shared build tooling and repository-wide guidance belong at the root.
 

@@ -1,4 +1,4 @@
-# Tuya TS0601 CO2 Zigbee Edge Driver
+# Tuya TS0601 Air Quality Zigbee
 
 SmartThings Edge driver for the Tuya TS0601 Zigbee sensor reporting
 manufacturer `_TZE204_3ejwxpmu`.
@@ -13,6 +13,14 @@ The driver handles Tuya EF00 reports for:
 
 These datapoints are based on community references for this manufacturer.
 Verify readings on the physical device after installation.
+
+## Reporting behavior
+
+Each measurement is reported when it first arrives, when it differs from its
+last reported value by at least 10 ppm CO2, 0.5 °C, or 1% relative humidity,
+or when at least 60 seconds have passed since its last event. The one-minute
+refresh is driven by incoming sensor reports; the driver does not emit cached
+readings when the sensor stops reporting.
 
 ## Requirements
 
