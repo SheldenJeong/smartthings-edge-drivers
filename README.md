@@ -50,6 +50,12 @@ smartthings edge:drivers:switch --hub <hub-id> --driver <driver-id> <device-id>
 Channel creation requires a valid terms-of-service URL pointing to a page you
 manage. Do not use a placeholder URL.
 
+The bilingual terms are in [`terms-of-service.html`](terms-of-service.html).
+To publish the page, enable GitHub Pages for this public repository and use the
+`main` branch root as the source. The resulting URL is:
+
+<https://sheldenjeong.github.io/tuya-ts0601-co2-zigbee/terms-of-service.html>
+
 ## Device fingerprint
 
 The fingerprint intentionally matches only `_TZE204_3ejwxpmu` / `TS0601`.
