@@ -82,5 +82,5 @@ local driver_template = {
   }
 }
 
-local driver = ZigbeeDriver("tuya-ts0601-co2", driver_template)
+local driver = ZigbeeDriver("tuya-ts0601-co2-zigbee", driver_template)
 driver:run()
